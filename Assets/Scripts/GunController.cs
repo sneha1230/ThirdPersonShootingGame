@@ -10,8 +10,8 @@ public class GunController : MonoBehaviour
     [Range(1, 10)]
     int damage = 1;
     private float timer;
-    [SerializeField]
-    Transform firePoint;
+    //[SerializeField]
+    //Transform firePoint;
     [SerializeField]
     private ParticleSystem muzzleParticle;
     [SerializeField]
@@ -40,7 +40,9 @@ public class GunController : MonoBehaviour
         //Debug.DrawRay(firePoint.position, firePoint.forward*50, Color.red, 2f);
         muzzleParticle.Play();
         audio.Play();
-        Ray ray = new Ray(firePoint.position, firePoint.forward);
+        Ray ray = Camera.main.ViewportPointToRay(Vector3.one * 0.5f);
+        Debug.DrawRay(ray.origin, ray.direction*100, Color.red, 2f);
+        // Ray ray = new Ray(firePoint.position, firePoint.forward);
         RaycastHit hit;
         if(Physics.Raycast(ray,out hit, 100))
         {

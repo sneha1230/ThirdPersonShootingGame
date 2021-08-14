@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     CharacterController characterController;
     public float playerMoveSpeed;
+    public float playerBackwardSpeed=3f;
     [SerializeField]
     public float turnSpeed;
     Animator anim;
@@ -25,7 +26,8 @@ public class PlayerMovement : MonoBehaviour
         transform.Rotate(Vector3.up, horizontalMovement * turnSpeed * Time.deltaTime);
         if (verticalMovement != null)
         {
-            characterController.SimpleMove(transform.forward * verticalMovement * playerMoveSpeed);
+            float moveSpeed = verticalMovement > 0 ? playerMoveSpeed : playerBackwardSpeed;
+            characterController.SimpleMove(transform.forward * verticalMovement * moveSpeed);
 
         }
         //Quaternion newDirection = Quaternion.LookRotation(playerMovement);
