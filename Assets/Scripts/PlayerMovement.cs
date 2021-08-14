@@ -21,10 +21,14 @@ public class PlayerMovement : MonoBehaviour
         var horizontalMovement = Input.GetAxis("Horizontal");
         var verticalMovement = Input.GetAxis("Vertical");
         var playerMovement = new Vector3(horizontalMovement, 0, verticalMovement);
-        characterController.SimpleMove(playerMovement * Time.deltaTime*playerMoveSpeed);
         anim.SetFloat("Speed", playerMovement.magnitude);
+        transform.Rotate(Vector3.up, horizontalMovement * turnSpeed * Time.deltaTime);
+        if (verticalMovement != null)
+        {
+            characterController.SimpleMove(transform.forward * verticalMovement * playerMoveSpeed);
 
-        Quaternion newDirection = Quaternion.LookRotation(playerMovement);
-        transform.rotation = Quaternion.Slerp(transform.rotation,newDirection,Time.deltaTime*turnSpeed);
+        }
+        //Quaternion newDirection = Quaternion.LookRotation(playerMovement);
+        //transform.rotation = Quaternion.Slerp(transform.rotation,newDirection,Time.deltaTime*turnSpeed);
     }
 }

@@ -11,7 +11,11 @@ public class GunController : MonoBehaviour
     int damage = 1;
     private float timer;
     [SerializeField]
-    Transform firePoint; 
+    Transform firePoint;
+    [SerializeField]
+    private ParticleSystem muzzleParticle;
+    [SerializeField]
+    private AudioSource audio;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,12 +37,18 @@ public class GunController : MonoBehaviour
     }
     private void FireGun()
     {
-        Debug.DrawRay(firePoint.position, firePoint.forward*50, Color.red, 2f);
+        //Debug.DrawRay(firePoint.position, firePoint.forward*50, Color.red, 2f);
+        muzzleParticle.Play();
+        audio.Play();
         Ray ray = new Ray(firePoint.position, firePoint.forward);
         RaycastHit hit;
         if(Physics.Raycast(ray,out hit, 100))
         {
-            Destroy(hit.collider.gameObject);
+            var health = hit.collider.gameObject.GetComponent<Health>();
+            if (health != null)
+            {
+                health.TakeDamage(damage);
+            }
         }
     }
 }
