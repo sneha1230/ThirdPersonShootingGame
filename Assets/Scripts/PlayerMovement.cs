@@ -14,12 +14,13 @@ public class PlayerMovement : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         anim = GetComponentInChildren<Animator>();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
     void Update()
     {
-        var horizontalMovement = Input.GetAxis("Horizontal");
+        var horizontalMovement = Input.GetAxis("Mouse X")*1f;
         var verticalMovement = Input.GetAxis("Vertical");
         var playerMovement = new Vector3(horizontalMovement, 0, verticalMovement);
         anim.SetFloat("Speed", playerMovement.magnitude);
